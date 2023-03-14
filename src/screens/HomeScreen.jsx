@@ -1,14 +1,14 @@
-import React from "react";
-import '../css/homeScreen.css'
-import Nav from "./nav.jsx";
-import Banner from "./banner.jsx";
-import requests from "../Requests";
-import { Row } from "./row";
+import React from 'react';
+import '../screens/homeScreen.css'
+import Nav from '../components/nav.jsx';
+import Banner from '../components/banner.jsx';
+import requests from '../Requests';
+import Row from '../components/row';
 
 const HomeScreen = () => {
     return (
         <>
-            <div className="homeScreen">
+            <div className='homeScreen'>
                 <Nav />
                 <Banner />
                 <Row

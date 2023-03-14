@@ -1,0 +1,110 @@
+.loginScreen {
+    position: relative;
+    height: 100%;
+    background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/85e22987-d2dd-46ca-b8b7-65cd0e31c24a/629ae878-26a7-4d88-b12b-af5018a1f7b2/US-en-20201123-popsignuptwoweeks-perspective_alpha_website_large.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.loginScreen_logo {
+    position: fixed;
+    left: 0;
+    width: 150px;
+    padding-left: 20px;
+    object-fit: contain;
+}
+
+.loginScreen_btn {
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #ffff;
+    background-color: #e50914;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.3rem;
+}
+
+.loginScreen_gradient {
+    width: 100%;
+    z-index: 1;
+    height: 100vh;
+    min-height: 1000px;
+    background: rgba(0, 0, 0, 0.4);
+    background-image: linear-gradient(to top,
+            rgba(0, 0, 0, 0.8) 0,
+            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 0.8) 100%);
+}
+
+.loginScreen_background {
+    min-height: 1000px;
+}
+
+.loginScreen_body,
+.loginScreen_container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    left: 0;
+    right: 0;
+}
+
+.loginScreen_body {
+    margin-top: 5%;
+    top: 80%;
+}
+
+.loginScreen_container {
+    top: 10%;
+}
+
+.loginScreen_body>h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.loginScreen_body>h2 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.loginScreen_body>h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.loginScreen_input>form>input {
+    padding: 15px;
+    outline-width: 0;
+    height: 49px;
+    width: 30%;
+    border: none;
+    max-width: 600px;
+    border-radius: 0.3rem;
+    background-color: rgba(26, 24, 24, 0.788);
+    border: 1px solid #595755;
+    color: white;
+}
+
+.loginScreen_getStarted {
+    font-size: 1rem;
+    padding: 15.3px 20px;
+    color: white;
+    background-color: #e50914;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.3rem;
+    margin-left: 10px;
+}

@@ -1,0 +1,110 @@
+.signUpScreen {
+    max-width: 550px;
+    padding: 60px 68px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.signUpScreen>form {
+    display: grid;
+    flex-direction: column;
+    max-width: 300px;
+    color: #aca6a6;
+}
+
+.signUpScreen>form>input {
+    outline-width: 0;
+    height: 40px;
+    margin-bottom: 14px;
+    border-radius: 0.3rem;
+    border: none;
+    padding: 5px 20px;
+    background-color: #e8f0fe;
+    width: 100%;
+    min-width: 220px;
+}
+
+.signUpScreen>form>button {
+    padding: 16px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #e50914;
+    border: none;
+    border-radius: 0.3rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.signUpScreen>h1 {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 25px;
+    padding-left: 0.1rem;
+}
+
+.signUpScreen_checkbox>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signUpScreen_checkbox>div>input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    background: #e8f0fe;
+    color: #aca6a6;
+}
+
+.signUpScreen_checkbox {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+    flex-grow: 1;
+}
+
+.signUpScreen_checkbox>div>input {
+    margin-right: 0.5rem;
+}
+
+.signUpScreen_checkbox>span:hover {
+    text-decoration: underline;
+}
+
+.signUpScreen_info {
+    padding: 20% 0;
+    text-align: left;
+}
+
+.signUpScreen_info>h4 {
+    font-size: 1rem;
+}
+
+.signUpScreen_info>h4>span {
+    color: #fff;
+    padding: 0 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.signUpScreen_info>h4>span:hover {
+    text-decoration: underline;
+}
+
+.signUpScreen_info>p {
+    font-size: 0.8rem;
+    padding-top: 15px;
+}
+
+.signUpScreen_info>p>a {
+    text-decoration: none;
+    color: #0353b6;
+    font-weight: 600;
+}
+
+.signUpScreen_info>p>a:hover {
+    text-decoration: underline;
+}

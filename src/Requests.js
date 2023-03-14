@@ -1,5 +1,5 @@
 //This would normally is store as (process.env.API_KEY)
-const API_KEY = "1ccd9aa693733b095c3a5da630e0eece";
+const API_KEY = '1ccd9aa693733b095c3a5da630e0eece';
 
 const requests = {
     //diferent endpoints that tmbd gives

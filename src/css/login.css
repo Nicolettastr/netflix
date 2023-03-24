@@ -20,13 +20,6 @@
     right: 20px;
     top: 20px;
     padding: 10px 20px;
-    font-size: 1rem;
-    color: #ffff;
-    background-color: #e50914;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    border-radius: 0.3rem;
 }
 
 .loginScreen_gradient {
@@ -85,6 +78,10 @@
     margin-bottom: 30px;
 }
 
+.loginScreen_input {
+    width: 100%;
+}
+
 .loginScreen_input>form>input {
     padding: 15px;
     outline-width: 0;
@@ -99,12 +96,6 @@
 }
 
 .loginScreen_getStarted {
-    font-size: 1rem;
     padding: 15.3px 20px;
-    color: white;
-    background-color: #e50914;
-    border: none;
-    cursor: pointer;
-    border-radius: 0.3rem;
     margin-left: 10px;
 }

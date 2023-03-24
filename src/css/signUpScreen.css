@@ -17,7 +17,7 @@
 
 .signUpScreen>form>input {
     outline-width: 0;
-    height: 40px;
+    height: 50px;
     margin-bottom: 14px;
     border-radius: 0.3rem;
     border: none;
@@ -29,13 +29,6 @@
 
 .signUpScreen>form>button {
     padding: 16px 20px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #e50914;
-    border: none;
-    border-radius: 0.3rem;
-    font-weight: 600;
-    cursor: pointer;
     margin-top: 20px;
 }
 

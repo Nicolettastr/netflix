@@ -1,11 +1,14 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import '../css/nav.css'
+import '../css/nav.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const Nav = () => {
 
     const [show, setShow] = useState(false);
+    const navigate = useNavigate()
 
     const transitionNavBar = () => {
         if (window.scrollY > 100) {
@@ -24,9 +27,11 @@ const Nav = () => {
         <div className={`nav ${show && `nav_black`}`}>
             <div className='nav_content'>
                 <img
+                    onClick={() => navigate('/')}
                     className='nav_logo'
                     src='https://1000marcas.net/wp-content/uploads/2020/01/Logo-Netflix.png' alt='netflix logo' />
                 <img
+                    onClick={() => navigate('/profile')}
                     className='nav_avatar'
                     src='https://i.pinimg.com/736x/db/70/dc/db70dc468af8c93749d1f587d74dcb08.jpg' alt='avatar picture' />
             </div>

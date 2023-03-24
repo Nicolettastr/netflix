@@ -1,4 +1,6 @@
-import firebase from 'firebase'
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyB4ZGFF__Vq2zTu6MMqQvEWq2-nKx4YPVA',
@@ -12,9 +14,8 @@ const firebaseConfig = {
 //initialize the app with credentials, this takes the config as an object
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 //fireStore is the data base
-const db = firebaseApp.fireStore();
+const db = firebaseApp.firestore();
 const auth = firebase.auth();
 
-//using both types of export, explicit and default. You can use just one default but many explicits
-export { auth };
-export default db;
+//using export explicit. You can use just one default but many explicits
+export { auth, db };

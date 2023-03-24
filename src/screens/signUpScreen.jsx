@@ -1,40 +1,34 @@
 import React, { useRef } from "react";
 import "../css/signUpScreen.css"
 import { Link } from "react-router-dom";
-// import { auth } from './firebase.js'
+import { auth } from '../firebase.js'
+import Button from "../components/button";
+import { useNavigate } from 'react-router-dom';
 
 const SignUpScreen = () => {
 
-    // const emailRef = useRef(null);
-    // const passwordRef = useRef(null);
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const navigate = useNavigate()
 
-    const register = (ev) => {
-        //when clicked, we want to create an user account
-        // ev.preventDefault()
-        // //set up the auth created in the firebase.js file 
-        // auth
-        //     .createUserWithEmailAndPassword(
-        //         //it takes the value of whatever emailRef and passwordRef is pointing
-        //         emailRef.current.value,
-        //         passwordRef.current.value
-        //     ).then((authUser) => {
-        //         console.log(authUser)
-        //     }).catch(error => {
-        //         alert(error.message)
-        //     })
-    }
 
     const signIn = (ev) => {
         ev.preventDefault()
-    }
+        auth.signInWithEmailAndPassword(
+            emailRef.current.value,
+            passwordRef.current.value
+        ).then((authUser) => {
+            console.log(authUser)
+        }).catch((error) => alert(error.message))
+    };
 
     return (
         <div className="signUpScreen">
             <h1>Sign In</h1>
             <form>
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button onClick={signIn} type="submit">Sign In</button>
+                <input ref={emailRef} type="email" placeholder="Email" />
+                <input ref={passwordRef} type="password" placeholder="Password" />
+                <Button type='submit' onClick={signIn} text='Sign In' />
                 <div className="signUpScreen_checkbox">
                     <div>
                         <input className="checked" type="checkbox" />
@@ -44,7 +38,7 @@ const SignUpScreen = () => {
                 </div>
                 <div className="signUpScreen_info">
                     <h4>New to Netflix?
-                        <span onClick={register}>Sign up now.</span>
+                        <span onClick={() => navigate('/register')}>Sign up now.</span>
                     </h4>
                     <p>
                         This page is protected by Google reCAPTCHA to ensure you're not a bot.

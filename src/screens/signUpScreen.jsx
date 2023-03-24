@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { auth } from '../firebase.js'
 import Button from "../components/button";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SignUpScreen = () => {
 
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const navigate = useNavigate()
-
+    const dispatch = useDispatch();
 
     const signIn = (ev) => {
         ev.preventDefault()

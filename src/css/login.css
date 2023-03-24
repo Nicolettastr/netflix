@@ -30,7 +30,7 @@
     background: rgba(0, 0, 0, 0.4);
     background-image: linear-gradient(to top,
             rgba(0, 0, 0, 0.8) 0,
-            rgba(0, 0, 0, 0) 60%,
+            rgba(0, 0, 0, 0.5) 60%,
             rgba(0, 0, 0, 0.8) 100%);
 }
 
@@ -82,20 +82,48 @@
     width: 100%;
 }
 
-.loginScreen_input>form>input {
+.loginScreen_input>form {
+    display: flex;
+    justify-content: center;
+}
+
+.loginScreen_input_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+    max-width: 600px;
+}
+
+.loginScreen_input>form>div>input {
     padding: 15px;
     outline-width: 0;
     height: 49px;
-    width: 30%;
+    width: 100%;
     border: none;
-    max-width: 600px;
     border-radius: 0.3rem;
     background-color: rgba(26, 24, 24, 0.788);
     border: 1px solid #595755;
     color: white;
+    margin-bottom: 0.5rem;
+}
+
+.loginScreen_input>form>div>span {
+    color: rgb(235, 57, 66);
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
 .loginScreen_getStarted {
     padding: 15.3px 20px;
     margin-left: 10px;
+    height: 49px;
+}
+
+.invalid {
+    border: 1px solid rgb(235, 57, 66) !important;
+}
+
+.valid {
+    border: 1px solid #a9c52f !important;
 }

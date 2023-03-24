@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+const userInitialState = {
   user: null,
-  email: null,
   status: 'idle',
 };
 
@@ -14,7 +13,7 @@ const initialState = {
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState,
+  initialState: userInitialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     handleLogin: (state, action) => {
@@ -28,11 +27,9 @@ export const userSlice = createSlice({
 });
 
 export const { handleLogin, handleLogout } = userSlice.actions;
-
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 // selectUser goes into the state, where it goes to the user state.user makes reference to the name: 'user' in the state and finally gets the user which is in the initialState as user: null
 export const selectUser = (state) => state.user.user;
-
 export default userSlice.reducer;

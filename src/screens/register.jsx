@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { auth } from "../firebase";
 
-const Register = () => {
+const Register = ({ email }) => {
 
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
@@ -23,21 +23,23 @@ const Register = () => {
     }
 
     return (
-        <section>
-            <div>
-                <p>PASO 1 DE 3</p>
-                <h2>¡Te damos de nuevo la bienvenida!</h2>
-                <h2>Es fácil suscribirse a Netflix.</h2>
-                <p>Escribe tu contraseña para empezar a disfrutar.</p>
-            </div>
-            <form>
-                <p>Dirección de correo</p>
-
-                <input type="password" placeholder="Password" />
-                <p>¿Has olvidado tu contraseña?</p>
-            </form>
-            <button >Next</button>
-        </section>
+        <>
+            <section>
+                <div>
+                    <p>STEP 1 OF 3</p>
+                    <h2>Welcome back!</h2>
+                    <h2>Joining Netflix is easy.</h2>
+                    <p>Enter your password and you'll be watching in no time.</p>
+                </div>
+                <form>
+                    <p>Email</p>
+                    <p>{email}</p>
+                    <input type="password" placeholder="Password" />
+                    <p>¿Has olvidado tu contraseña?</p>
+                </form>
+                <button >Next</button>
+            </section>
+        </>
     )
 };
 

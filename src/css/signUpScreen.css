@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.85);
 }
 
 .signUpScreen>form {

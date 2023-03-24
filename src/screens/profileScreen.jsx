@@ -4,13 +4,16 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../features/userSlice";
 import Button from "../components/button";
 import { auth } from '../firebase.js'
+import { useNavigate } from "react-router-dom";
 
 const ProfileScreen = () => {
 
+    const navigate = useNavigate()
     const user = useSelector(selectUser)
 
     const handleSignOut = () => {
         auth.signOut()
+        navigate('/')
     }
 
     return (

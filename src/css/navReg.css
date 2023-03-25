@@ -1,0 +1,26 @@
+.register_background {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0.8rem;
+    align-items: center;
+    border-bottom: 1px solid #ececec;
+}
+
+.regiser_logo {
+    width: 25%;
+    max-width: 170px;
+    min-width: 80px;
+    margin-left: 1rem;
+}
+
+.register_btn {
+    width: 15%;
+    min-width: 80px;
+    max-width: 180px;
+    background: none;
+    font-size: 1.2rem;
+    color: black;
+    font-weight: 400;
+    text-align: end;
+    margin-right: 1rem;
+}

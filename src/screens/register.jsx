@@ -1,20 +1,28 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
+import { useLocation } from "react-router-dom";
+import NavReg from "../components/navReg";
+import '../css/register.css'
+import Button from "../components/button";
 
-const Register = ({ email }) => {
+const Register = () => {
 
-    const emailRef = useRef(null);
-    const passwordRef = useRef(null);
+    const emailValue = useRef(null);
+    const passwordValue = useRef(null);
+    const location = useLocation()
+    const email = new URLSearchParams(location.search).get('email');
+    const [passwordValidation, setPasswordValidation] = useState("")
+    const [invalid, setInvalid] = useState(false)
 
     const register = (ev) => {
         //when clicked, we want to create an user account
-        ev.preventDefault()
+        if (ev) ev.preventDefault();
         //set up the auth created in the firebase.js file 
         auth
             .createUserWithEmailAndPassword(
                 //it takes the value of whatever emailRef and passwordRef is pointing
-                emailRef.current.value,
-                passwordRef.current.value
+                emailValue.current.value,
+                passwordValue.current.value
             ).then((authUser) => {
                 console.log(authUser)
             }).catch(error => {
@@ -22,22 +30,53 @@ const Register = ({ email }) => {
             })
     }
 
+    const handlePassword = (ev) => {
+        setPasswordValidation(ev.target.value)
+    }
+
+    const handleNextStep = (ev) => {
+        ev.preventDefault();
+
+        setPasswordValidation(ev.target.value)
+        if (passwordValidation === "") {
+            setInvalid(true)
+            setTimeout(() => {
+                setInvalid(false)
+            }, 2000)
+        } else if (passwordValidation.length < 6) {
+            alert('Password must have at least 6 characters')
+        } else {
+            register()
+        }
+    }
+
     return (
         <>
-            <section>
+            <section className="register_section">
                 <div>
-                    <p>STEP 1 OF 3</p>
-                    <h2>Welcome back!</h2>
-                    <h2>Joining Netflix is easy.</h2>
-                    <p>Enter your password and you'll be watching in no time.</p>
+                    <NavReg />
                 </div>
-                <form>
-                    <p>Email</p>
-                    <p>{email}</p>
-                    <input type="password" placeholder="Password" />
-                    <p>¿Has olvidado tu contraseña?</p>
-                </form>
-                <button >Next</button>
+                <div className="register_infoContainer">
+                    <div>
+                        <p>STEP <strong>1</strong> OF <strong>3</strong></p>
+                        <h2>Create a password to start your membership</h2>
+                        <p>Just a few more steps and you're done!</p>
+                        <p>We hate paperwork, too.</p>
+                    </div>
+                    <form>
+                        <input ref={emailValue} id='email' name="Email" type="email" placeholder="Enter Your Email" defaultValue={email} />
+                        <input ref={passwordValue} className={`password_input ${invalid ? 'invalid' : ''}`} id="password" name="Password" type="password" placeholder="Add a Password" value={passwordValidation} onChange={handlePassword} />
+                        {invalid ? (
+                            <span className="span">
+                                Password is required!
+                            </span>
+                        ) : ""}
+                        <div className="register_checkbox">
+                            <input type="checkbox" /><span>Please do not email me Netflix special offers.</span>
+                        </div>
+                        <Button text='Next' className='nextStep_btn' onClick={handleNextStep} />
+                    </form>
+                </div>
             </section>
         </>
     )

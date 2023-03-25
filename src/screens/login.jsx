@@ -7,16 +7,16 @@ import SignUpScreen from './signUpScreen';
 import Button from '../components/button.jsx'
 import { auth } from '../firebase.js'
 import { useNavigate } from 'react-router-dom';
-import Register from './register.jsx';
 
 const Login = () => {
 
     const [signIn, setSignIn] = useState(false);
-    const [email, setEmail] = useState(null);
+    const [email, setEmail] = useState("");
     const [emailExists, setEmailExists] = useState(false)
     const navigate = useNavigate();
     const [invalid, setInvalid] = useState(false)
     const getStarted = document.querySelector('#getStarted')
+    const getStarted_mg = document.querySelector('#getStarted_mg')
 
     const handleEmail = (ev) => {
 
@@ -31,6 +31,8 @@ const Login = () => {
             });
     }
 
+    console.log(emailExists)
+
     const handleSignIn = () => {
         setSignIn(true)
     }
@@ -40,27 +42,20 @@ const Login = () => {
         if (emailExists) {
             setSignIn(true)
             setEmail("")
-            getStarted.classList.remove('valid')
+            getStarted.classList.add('valid')
         } else if (email === "" || email === null || email === undefined) {
             setInvalid(true)
         } else {
-            navigate('/register')
             setEmail("")
+            //The encodeURIComponent function is to encode the email value in case it contains characters that are not allowed in a URL.
+            navigate(`/register?email=${encodeURIComponent(email)}`)
             getStarted.classList.remove('valid')
         }
-
     }
 
     if (invalid) {
         getStarted.classList.add('invalid')
-        setTimeout(() => {
-            setInvalid(false)
-            getStarted.classList.remove('invalid')
-        }, 10000)
-    }
-
-    if (email) {
-        return <Register email={email} />
+        getStarted_mg.classList.add('loginScreen_getStarted_mg')
     }
 
     return (
@@ -89,7 +84,7 @@ const Login = () => {
                                         </span>
                                     ) : ""}
                                 </div>
-                                <Button text='Get Started' onClick={handleGetStarted} className={'loginScreen_getStarted'}
+                                <Button id='getStarted_mg' text='Get Started' onClick={handleGetStarted} className={'loginScreen_getStarted'}
                                     fontIcon={<FontAwesomeIcon icon={faChevronRight} />} />
                             </form>
                         </div>

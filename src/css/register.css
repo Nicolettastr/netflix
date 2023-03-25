@@ -1,0 +1,83 @@
+.register_section {
+    width: 100vw;
+    height: 100vh;
+    background: white;
+}
+
+.register_section p,
+.register_section h2 {
+    color: black;
+}
+
+.register_infoContainer {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 32px 60px;
+}
+
+.register_infoContainer>div:nth-child(1) {
+    width: 35%;
+    min-width: 250px;
+}
+
+.register_infoContainer>form {
+    width: 35%;
+    min-width: 250px;
+}
+
+.register_infoContainer>div>p:nth-child(1) {
+    font-size: 0.8rem;
+}
+
+.register_infoContainer>div>h2 {
+    margin: 0.5rem 0;
+    font-size: 2rem;
+}
+
+.register_infoContainer>div>p:nth-child(3),
+.register_infoContainer>div>p:nth-child(4) {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+.register_infoContainer>form>input {
+    width: 100%;
+    height: 60px;
+    padding-left: 0.5rem;
+    border: 1px solid #a2a3a0;
+    border-radius: 0.2rem;
+    margin: 0.5rem 0;
+}
+
+.nextStep_btn {
+    width: 100%;
+    height: 60px;
+    font-size: 1.5rem;
+    font-weight: 300;
+}
+
+.register_checkbox {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.register_checkbox>input {
+    width: 20px;
+    height: 20px;
+    margin: 0.5rem 0.3rem 0.8rem 0;
+}
+
+.invalid {
+    border: 1px solid rgb(235, 57, 66) !important;
+}
+
+.span {
+    color: rgb(235, 57, 66);
+    font-size: 0.8rem;
+    font-weight: 600;
+}

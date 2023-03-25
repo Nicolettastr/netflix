@@ -84,15 +84,18 @@
 
 .loginScreen_input>form {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .loginScreen_input_container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
-    max-width: 600px;
+    width: 50%;
+    max-width: 280px;
+    min-width: 200px;
 }
 
 .loginScreen_input>form>div>input {
@@ -105,7 +108,6 @@
     background-color: rgba(26, 24, 24, 0.788);
     border: 1px solid #595755;
     color: white;
-    margin-bottom: 0.5rem;
 }
 
 .loginScreen_input>form>div>span {
@@ -120,10 +122,38 @@
     height: 49px;
 }
 
+.loginScreen_getStarted_mg {
+    margin-bottom: 2.4rem;
+}
+
 .invalid {
     border: 1px solid rgb(235, 57, 66) !important;
+    margin-bottom: 0.5rem;
 }
 
 .valid {
     border: 1px solid #a9c52f !important;
+}
+
+@media (min-width: 500px) {
+    .loginScreen_input>form {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .loginScreen_input_container {
+        width: 30%;
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 500px) {
+    .invalid {
+        margin-bottom: 0.8rem;
+    }
+
+    .loginScreen_getStarted_mg {
+        margin-bottom: 1.8rem;
+    }
 }

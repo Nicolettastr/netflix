@@ -22,7 +22,8 @@ export const userSlice = createSlice({
 
     handleLogout: (state) => {
       state.user = null;
-    }
+    },
+
   },
 });
 

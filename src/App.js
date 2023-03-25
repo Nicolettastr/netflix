@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import HomeScreen from './screens/HomeScreen.jsx'
 import Login from './screens/login.jsx'
 import './App.css';
@@ -14,7 +14,11 @@ function App() {
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
+  const [newUser, setNewUser] = useState(false);
 
+  const handleRegisterUser = () => {
+    setNewUser(true)
+  }
 
   useEffect(() => {
     const unSubscribe = auth.onAuthStateChanged(userAuth => {
@@ -38,7 +42,7 @@ function App() {
   return (
     <div className='app'>
       <Router>
-        {user ? (
+        {user && !newUser ? (
           <Nav />
         ) : ""}
         <Routes>
@@ -50,7 +54,7 @@ function App() {
           ) : (
             <Route element={<Login />} path='/' />
           )}
-          <Route element={<Register />} path='/register' />
+          <Route element={<Register handleRegisterUser={handleRegisterUser} />} path='/register' />
         </Routes>
       </Router>
     </div>

@@ -5,8 +5,9 @@ import NavReg from "../components/navReg";
 import '../css/register.css'
 import Button from "../components/button";
 import StepOne from "../components/stepOne.jsx";
+import StepTwo from "../components/stepTwo.jsx";
 
-const Register = () => {
+const Register = ({ handleRegisterUser }) => {
 
     const emailValue = useRef(null);
     const passwordValue = useRef(null);
@@ -30,6 +31,8 @@ const Register = () => {
             }).catch(error => {
                 alert(error.message)
             })
+
+        handleRegisterUser()
     }
 
     const handlePassword = (ev) => {
@@ -99,9 +102,11 @@ const Register = () => {
                         </form>
                     </div>
                 </section>
-            ) : (
-                ""
-            )
+            ) : step === 3 ? (
+                <div className="stepOne_section">
+                    <StepTwo handleStep={handleStep} />
+                </div>
+            ) : ""
             }
         </>
     )

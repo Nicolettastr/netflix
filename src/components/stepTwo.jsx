@@ -3,7 +3,7 @@ import Button from "./button";
 import '../css/steps.css';
 import devices from '../img/sizes.jpg'
 
-const StepOne = ({ handleStep }) => {
+const StepTwo = ({ handleStep }) => {
 
     const handleStepOne = () => {
         handleStep()
@@ -28,4 +28,4 @@ const StepOne = ({ handleStep }) => {
     )
 };
 
-export default StepOne;
+export default StepTwo;

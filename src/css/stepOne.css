@@ -1,0 +1,45 @@
+.stepOne_section {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    background-color: white;
+    padding-top: 2rem;
+}
+
+.stepOne_container>div>p,
+.stepOne_container>div>h2 {
+    width: 60%;
+    max-width: 500px;
+    color: black;
+    text-align: center;
+}
+
+.stepOne_container>div>p:nth-child(3) {
+    padding: 0 0 0.5rem 0;
+}
+
+.stepOne_container>div>h2 {
+    margin: 1rem 0;
+}
+
+.stepOne_container>div>button {
+    width: 60%;
+    margin: 1rem 0;
+    max-width: 450px;
+}
+
+.stepOne_container>div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.stepOne_container>div>img {
+    width: 50%;
+    max-width: 450px;
+}

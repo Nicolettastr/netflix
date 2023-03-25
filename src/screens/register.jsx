@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import NavReg from "../components/navReg";
 import '../css/register.css'
 import Button from "../components/button";
+import StepOne from "../components/stepOne.jsx";
 
 const Register = () => {
 
@@ -13,6 +14,7 @@ const Register = () => {
     const email = new URLSearchParams(location.search).get('email');
     const [passwordValidation, setPasswordValidation] = useState("")
     const [invalid, setInvalid] = useState(false)
+    const [step, setStep] = useState(1)
 
     const register = (ev) => {
         //when clicked, we want to create an user account
@@ -50,34 +52,57 @@ const Register = () => {
         }
     }
 
+    const handleStep = () => {
+        setStep(step + 1)
+    }
+
     return (
         <>
-            <section className="register_section">
+            <div>
                 <div>
                     <NavReg />
                 </div>
-                <div className="register_infoContainer">
-                    <div>
-                        <p>STEP <strong>1</strong> OF <strong>3</strong></p>
-                        <h2>Create a password to start your membership</h2>
-                        <p>Just a few more steps and you're done!</p>
-                        <p>We hate paperwork, too.</p>
-                    </div>
-                    <form>
-                        <input ref={emailValue} id='email' name="Email" type="email" placeholder="Enter Your Email" defaultValue={email} />
-                        <input ref={passwordValue} className={`password_input ${invalid ? 'invalid' : ''}`} id="password" name="Password" type="password" placeholder="Add a Password" value={passwordValidation} onChange={handlePassword} />
-                        {invalid ? (
-                            <span className="span">
-                                Password is required!
-                            </span>
-                        ) : ""}
-                        <div className="register_checkbox">
-                            <input type="checkbox" /><span>Please do not email me Netflix special offers.</span>
-                        </div>
-                        <Button text='Next' className='nextStep_btn' onClick={handleNextStep} />
-                    </form>
+            </div>
+            {step === 1 ? (
+                <div className="stepOne_section">
+                    <StepOne handleStep={handleStep} />
                 </div>
-            </section>
+            ) : step === 2 ? (
+                <section className="register_section">
+                    <div className="register_infoContainer">
+                        <div>
+                            <p>
+                                STEP <strong>1</strong> OF <strong>3</strong>
+                            </p>
+                            <h2>
+                                Create a password to start your membership
+                            </h2>
+                            <p>
+                                Just a few more steps and you're done!
+                            </p>
+                            <p>
+                                We hate paperwork, too.
+                            </p>
+                        </div>
+                        <form>
+                            <input ref={emailValue} id='email' name="Email" type="email" placeholder="Enter Your Email" defaultValue={email} />
+                            <input ref={passwordValue} className={`password_input ${invalid ? 'invalid' : ''}`} id="password" name="Password" type="password" placeholder="Add a Password" value={passwordValidation} onChange={handlePassword} />
+                            {invalid ? (
+                                <span className="span">
+                                    Password is required!
+                                </span>
+                            ) : ""}
+                            <div className="register_checkbox">
+                                <input type="checkbox" /><span>Please do not email me Netflix special offers.</span>
+                            </div>
+                            <Button text='Next' className='nextStep_btn' onClick={handleNextStep} />
+                        </form>
+                    </div>
+                </section>
+            ) : (
+                ""
+            )
+            }
         </>
     )
 };

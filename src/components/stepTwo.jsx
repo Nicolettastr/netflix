@@ -1,27 +1,36 @@
 import React from "react";
 import Button from "./button";
 import '../css/steps.css';
-import devices from '../img/sizes.jpg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 const StepTwo = ({ handleStep }) => {
 
-    const handleStepOne = () => {
+    const handleStepTwo = () => {
         handleStep()
     }
+
+    const details = ["No commitments, cancel anytime.", "Endless entertaiment for one low price.", "Enjoy Netflix on all your devices."]
+
+    const detailsInfo = details.map((detail, index) => {
+        return <li key={index + 1}><FontAwesomeIcon className="faIcon" icon={faCheck} />{detail}</li>
+    })
 
     return (
         <>
             <section className="stepOne_container">
                 <div>
-                    <img src={devices} alt="diferent devices sizes such as laptops, desktop, mobile and tablet" />
+                    <FontAwesomeIcon className="faIcon" icon={faCircleCheck} />
                 </div>
                 <div>
-                    <p>Step <strong>1</strong> of <strong>3</strong></p>
-                    <h2>Finish setting up your account</h2>
-                    <p>Netflix is personalized for you.</p>
-                    <p>Create a password to watch on any device at any time.</p>
+                    <p>Step <strong>2</strong> of <strong>3</strong></p>
+                    <h2>Choose your plan.</h2>
+                    <ul>
+                        {detailsInfo}
+                    </ul>
                     <Button text='Next' className='nextStep_btn'
-                        onClick={handleStepOne} />
+                        onClick={handleStepTwo} />
                 </div>
             </section>
         </>

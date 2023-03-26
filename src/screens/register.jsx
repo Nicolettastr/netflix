@@ -33,6 +33,7 @@ const Register = ({ handleRegisterUser }) => {
             })
 
         handleRegisterUser()
+        handleStep()
     }
 
     const handlePassword = (ev) => {
@@ -58,6 +59,8 @@ const Register = ({ handleRegisterUser }) => {
     const handleStep = () => {
         setStep(step + 1)
     }
+
+    console.log(step)
 
     return (
         <>

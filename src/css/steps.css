@@ -1,3 +1,7 @@
+li {
+    list-style: none;
+}
+
 .stepOne_section {
     width: 100vw;
     height: 100vh;
@@ -42,4 +46,8 @@
 .stepOne_container>div>img {
     width: 50%;
     max-width: 450px;
+}
+
+.faIcon {
+    color: #ff4757;
 }

@@ -2,7 +2,7 @@ li {
     list-style: none;
 }
 
-.stepOne_section {
+.step_section {
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -13,29 +13,29 @@ li {
     padding-top: 2rem;
 }
 
-.stepOne_container>div>p,
-.stepOne_container>div>h2 {
+.step_container>div>p,
+.step_container>div>h2 {
     width: 60%;
     max-width: 500px;
-    color: black;
+    color: #141010;
     text-align: center;
 }
 
-.stepOne_container>div>p:nth-child(3) {
+.step_container>div>p:nth-child(3) {
     padding: 0 0 0.5rem 0;
 }
 
-.stepOne_container>div>h2 {
+.step_container>div>h2 {
     margin: 1rem 0;
 }
 
-.stepOne_container>div>button {
+.step_container>div>button {
     width: 60%;
     margin: 1rem 0;
     max-width: 450px;
 }
 
-.stepOne_container>div {
+.step_container>div {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -43,11 +43,118 @@ li {
     align-items: center;
 }
 
-.stepOne_container>div>img {
+.step_container>div>img {
     width: 50%;
     max-width: 450px;
 }
 
 .faIcon {
-    color: #ff4757;
+    color: #e50914;
+    margin-bottom: 2rem;
+}
+
+.faIcon_encrypted {
+    color: #f0d43a;
+    padding: 0 0.3rem;
+}
+
+.faCheck {
+    height: 22px;
+    padding: 0 0.5rem;
+}
+
+.faLock {
+    font-size: 2rem;
+}
+
+.faCircleCheck {
+    font-size: 2rem;
+}
+
+.stepTwo_container>p {
+    padding: 1rem 0 0;
+}
+
+.stepTwo_container>h2 {
+    width: 100%;
+}
+
+.stepTwo_container>ul {
+    width: 80%;
+}
+
+.stepTwo_container>ul>li {
+    display: flex;
+    padding: 0.5rem 0;
+}
+
+.stepTwo_btn {
+    width: 80% !important;
+}
+
+.stepThree_payOpt {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #c7c3c3;
+    border-radius: 0.3rem;
+    margin: 0.3rem 0;
+    padding: 0 0.4rem;
+    cursor: pointer;
+}
+
+.stepThree_payOpt>div {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+.stepThree_payOpt>div>p {
+    color: #141010;
+    display: flex;
+    align-self: center;
+    padding-right: 0.5rem;
+}
+
+.stepThree_payOpt>p>img {
+    width: 70px;
+}
+
+.payment_icon {
+    padding: 0 0.3rem;
+    color: #e50914;
+}
+
+.visa {
+    color: #005792;
+}
+
+.faChevronRight {
+    padding-right: 0.5rem;
+    color: #141010;
+}
+
+.stepThree_info>p {
+    width: 85% !important;
+}
+
+.stepThree_info>h2 {
+    font-size: 1.8rem;
+}
+
+.stepThree_info>p:nth-child(4) {
+    margin-top: 0.5rem;
+}
+
+.stepThree_info>p:nth-child(5) {
+    margin-bottom: 1.5rem;
+}
+
+.stepThree_info>span {
+    display: flex;
+    width: 90%;
+    justify-content: end;
+    font-size: 0.8rem;
 }

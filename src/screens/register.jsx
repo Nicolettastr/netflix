@@ -1,11 +1,14 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { auth } from "../firebase";
 import { useLocation } from "react-router-dom";
 import NavReg from "../components/navReg";
 import '../css/register.css'
-import Button from "../components/button";
 import StepOne from "../components/stepOne.jsx";
+import StepOneForm from "../components/stepOneForm";
 import StepTwo from "../components/stepTwo.jsx";
+import StepThree from "../components/StepThree.jsx";
+import Login from "./login.jsx"
+import Plans from "../components/plans";
 
 const Register = ({ handleRegisterUser }) => {
 
@@ -56,9 +59,22 @@ const Register = ({ handleRegisterUser }) => {
         }
     }
 
-    const handleStep = () => {
+    const handleStep = (num = 1) => {
         setStep(step + 1)
+        if (step < 1 || step > 9) {
+            return <Login />
+        }
+        window.history.pushState({ step: step + 1 }, "", "");
     }
+
+    useEffect(() => {
+        const handlePopState = () => {
+            setStep((prevStep) => prevStep - 1);
+        };
+
+        window.addEventListener("popstate", handlePopState);
+        return () => window.removeEventListener("popstate", handlePopState);
+    }, []);
 
     console.log(step)
 
@@ -70,44 +86,22 @@ const Register = ({ handleRegisterUser }) => {
                 </div>
             </div>
             {step === 1 ? (
-                <div className="stepOne_section">
+                <div className="step_section">
                     <StepOne handleStep={handleStep} />
                 </div>
             ) : step === 2 ? (
-                <section className="register_section">
-                    <div className="register_infoContainer">
-                        <div>
-                            <p>
-                                STEP <strong>1</strong> OF <strong>3</strong>
-                            </p>
-                            <h2>
-                                Create a password to start your membership
-                            </h2>
-                            <p>
-                                Just a few more steps and you're done!
-                            </p>
-                            <p>
-                                We hate paperwork, too.
-                            </p>
-                        </div>
-                        <form>
-                            <input ref={emailValue} id='email' name="Email" type="email" placeholder="Enter Your Email" defaultValue={email} />
-                            <input ref={passwordValue} className={`password_input ${invalid ? 'invalid' : ''}`} id="password" name="Password" type="password" placeholder="Add a Password" value={passwordValidation} onChange={handlePassword} />
-                            {invalid ? (
-                                <span className="span">
-                                    Password is required!
-                                </span>
-                            ) : ""}
-                            <div className="register_checkbox">
-                                <input type="checkbox" /><span>Please do not email me Netflix special offers.</span>
-                            </div>
-                            <Button text='Next' className='nextStep_btn' onClick={handleNextStep} />
-                        </form>
-                    </div>
-                </section>
+                <StepOneForm passwordValidation={passwordValidation} emailValue={emailValue} passwordValue={passwordValue} email={email} invalid={invalid} handlePassword={handlePassword} handleNextStep={handleNextStep} />
             ) : step === 3 ? (
-                <div className="stepOne_section">
+                <div className="step_section">
                     <StepTwo handleStep={handleStep} />
+                </div>
+            ) : step === 4 ? (
+                <div className="step_section">
+                    <Plans handleStep={handleStep} />
+                </div>
+            ) : step === 5 ? (
+                <div className="step_section">
+                    <StepThree handleStep={handleStep} />
                 </div>
             ) : ""
             }

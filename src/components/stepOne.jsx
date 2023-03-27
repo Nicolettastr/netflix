@@ -11,7 +11,7 @@ const StepOne = ({ handleStep }) => {
 
     return (
         <>
-            <section className="stepOne_container">
+            <section className="step_container">
                 <div>
                     <img src={devices} alt="diferent devices sizes such as laptops, desktop, mobile and tablet" />
                 </div>

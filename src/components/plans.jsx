@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import '../css/plans.css'
 import { db } from "../firebase";
 
@@ -106,7 +106,7 @@ const Plans = () => {
         )
     })
 
-    const planTypes = [basic, basicWA, standard, premium]
+    const planTypes = [basic, standard, premium]
 
     const detailsInfo = details.map((detail, index) => {
         const types = planTypes.map((element, elementIndex) => {
@@ -114,7 +114,20 @@ const Plans = () => {
                 <div key={elementIndex}>
                     {element.map((item) => {
                         return (
-                            <span>{detail === "Video quality." ? item.description[0] : detail === "Resolution." ? item.description[1] : detail === "Watch on your TV, computer, mobile phone and tablet." ? item.description[2] : detail === "Downloads." ? item.description[3] : ""}</span>
+                            <span>
+                                {
+                                    detail === "Video quality." ? item.description[0] :
+                                        detail === "Resolution." ? item.description[1]
+                                            :
+                                            detail === "Watch on your TV, computer, mobile phone and tablet." ? (
+                                                <FontAwesomeIcon icon={item.description[2] ? faCheck : faXmark} />
+                                            )
+                                                :
+                                                detail === "Downloads."
+                                                    ? (
+                                                        <FontAwesomeIcon icon={item.description[3] ? faCheck : faXmark} />
+                                                    ) : ""
+                                }</span>
                         )
                     })}
                 </div>

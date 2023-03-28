@@ -5,3 +5,99 @@ p {
 .third_section_info>h2 {
     color: #141010;
 }
+
+.third_section_info {
+    width: 85vw;
+}
+
+.third_section_info>ul {
+    margin: 1rem 0;
+}
+
+.third_section_info>ul>li {
+    margin: 0.5rem 0;
+}
+
+.product__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.productAdvantages {
+    border-bottom: 2px solid #c7c3c3;
+    width: 85vw;
+    padding: 0.8rem;
+}
+
+.productAdvantages:nth-child(5) {
+    border: none;
+}
+
+.productAdvantages>div>div {
+    width: 35%;
+    height: 45px;
+    display: flex;
+    align-items: center;
+}
+
+.productType__container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.productName {
+    width: 85px;
+    height: 85px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.2rem;
+    text-align: center;
+    background-color: #e50914;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 1rem;
+    margin: 0 0.3rem;
+}
+
+.productName:nth-child(2) {
+    display: none;
+}
+
+.productAdvantages {
+    display: none;
+}
+
+@media (min-width: 600px) {
+    .productName {
+        width: 90px;
+        height: 90px;
+        margin: 0 1rem 0 0;
+    }
+
+    .productType__container {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+    }
+
+    .productAdvantages {
+        display: block;
+    }
+
+    .product__container {
+        flex-direction: row-reverse;
+        float: left;
+    }
+}
+
+@media (min-width: 900px) {
+    .productName {
+        width: 118px;
+        height: 118px;
+    }
+}

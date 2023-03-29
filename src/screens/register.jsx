@@ -18,7 +18,15 @@ const Register = ({ handleRegisterUser }) => {
     const email = new URLSearchParams(location.search).get('email');
     const [passwordValidation, setPasswordValidation] = useState("")
     const [invalid, setInvalid] = useState(false)
-    const [step, setStep] = useState(1)
+
+    const [step, setStep] = useState(() => {
+        const storedStep = sessionStorage.getItem('step');
+        return storedStep !== null ? parseInt(storedStep) : 1;
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('step', step);
+    }, [step]);
 
     const register = (ev) => {
         //when clicked, we want to create an user account
@@ -60,7 +68,8 @@ const Register = ({ handleRegisterUser }) => {
     }
 
     const handleStep = (num = 1) => {
-        setStep(step + 1)
+        setStep(step + 1);
+        localStorage.setItem("step", step + 1);
         if (step < 1 || step > 9) {
             return <Login />
         }

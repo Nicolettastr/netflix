@@ -14,11 +14,18 @@ function App() {
 
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [newUser, setNewUser] = useState(false);
+  const [newUser, setNewUser] = useState(sessionStorage.getItem('newUser') === 'true' ? true : false);
 
   const handleRegisterUser = () => {
     setNewUser(true)
+    sessionStorage.setItem('newUser', 'true');
   }
+
+  const clearSessionStorage = () => {
+    sessionStorage.clear();
+  }
+
+  console.log("newUser", newUser)
 
   useEffect(() => {
     const unSubscribe = auth.onAuthStateChanged(userAuth => {
@@ -32,6 +39,7 @@ function App() {
       } else {
         //logged out
         dispatch(handleLogout())
+        clearSessionStorage()
       }
     })
 

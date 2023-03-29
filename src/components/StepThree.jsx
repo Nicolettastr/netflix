@@ -67,7 +67,7 @@ const StepThree = ({ handleStep }) => {
 
     return (
         <> {payments ? (
-            <PaymentOpt paymentOptions={paymentOptions} />
+            <PaymentOpt handleStep={handleStep} paymentOptions={paymentOptions} />
         ) : debitCredit ? (
             ""
         ) : paypal ? (

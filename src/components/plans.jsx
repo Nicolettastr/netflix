@@ -1,19 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faXmark, faLock } from "@fortawesome/free-solid-svg-icons";
 import '../css/plans.css'
 import { db } from "../firebase";
+import Button from "./button.jsx";
 
-const Plans = () => {
+const Plans = ({ handleStep }) => {
 
     const details = ["Monthly price.", "Video quality.", "Resolution.", "Watch on your TV, computer, mobile phone and tablet.", "Downloads."]
     const advantages = ["Watch all you want.", "Recommendations just for you.", "Change or cancel your plan anytime."]
-    const [products, setProducts] = useState([]);
-    const [productNames, setProductNames] = useState([])
+    const [products, setProducts] = useState(JSON.parse(localStorage.getItem("products")) || []);
+    const [productNames, setProductNames] = useState(JSON.parse(localStorage.getItem("productName")) || []);
     const [basic, setBasic] = useState([])
     const [basicWA, setBasicWA] = useState([])
     const [standard, setStandard] = useState([])
     const [premium, setPremium] = useState([])
+    const [activeBA, setActiveBA] = useState(false)
+    const [activeB, setActiveB] = useState(false)
+    const [activeS, setActiveS] = useState(false)
+    const [activeP, setActiveP] = useState(true)
 
     //Use an useEffect to fetch the plans from the data base, this is because the stripe extension pulls the stripe data into our firebase data and connects them.
 
@@ -45,6 +50,7 @@ const Plans = () => {
     //         });
     // }, []);
 
+
     useEffect(() => {
         // fetch products from firebase
         db.collection('products')
@@ -63,6 +69,7 @@ const Plans = () => {
                     });
                 });
                 setProducts(products);
+                localStorage.setItem("products", JSON.stringify(products));
 
                 const productData = Object.entries(products).map(([productId, productData]) => ({
                     id: productId,
@@ -70,6 +77,8 @@ const Plans = () => {
                     description: productData.description,
                 }));
                 setProductNames(productData);
+                localStorage.setItem("productName", JSON.stringify(productNames));
+
 
                 productNames.map((item) => {
                     const id = item.id;
@@ -106,13 +115,39 @@ const Plans = () => {
         )
     })
 
-    const planTypes = [basic, standard, premium]
+    const handleActiveProduct = (id) => {
+        if (id === "prod_NbXCjRGeUK6wM3") {
+            setActiveBA(true)
+            setActiveB(false)
+            setActiveS(false)
+            setActiveP(false)
+        } else if (id === "prod_NbXD8ij76WI8nh") {
+            setActiveB(true)
+            setActiveBA(false)
+            setActiveS(false)
+            setActiveP(false)
+        } else if (id === "prod_NbXEfymdNwnKLm") {
+            setActiveS(true)
+            setActiveBA(false)
+            setActiveB(false)
+            setActiveP(false)
+        } else if (id === "prod_NbXGmt0rwlsTlm") {
+            setActiveP(true)
+            setActiveBA(false)
+            setActiveB(false)
+            setActiveS(false)
+        }
+    }
+
+    const planTypes = [basicWA, basic, standard, premium]
 
     const detailsInfo = details.map((detail, index) => {
         const types = planTypes.map((element, elementIndex) => {
             return (
-                <div key={elementIndex}>
+                <span className={
+                    activeBA ? "activeBA span_container" : activeB ? "activeB span_container" : activeS ? "activeS span_container" : activeP ? "activeP span_container" : "span_container"} key={elementIndex}>
                     {element.map((item) => {
+                        console.log(item.description[3])
                         return (
                             <span>
                                 {
@@ -120,33 +155,45 @@ const Plans = () => {
                                         detail === "Resolution." ? item.description[1]
                                             :
                                             detail === "Watch on your TV, computer, mobile phone and tablet." ? (
-                                                <FontAwesomeIcon icon={item.description[2] ? faCheck : faXmark} />
+                                                <FontAwesomeIcon icon={item.description[2] === true ? faCheck : faXmark} />
                                             )
                                                 :
                                                 detail === "Downloads."
                                                     ? (
-                                                        <FontAwesomeIcon icon={item.description[3] ? faCheck : faXmark} />
+                                                        <FontAwesomeIcon icon={item.description[3] === true ? faCheck : faXmark} />
                                                     ) : ""
                                 }</span>
                         )
                     })}
-                </div>
+                </span>
             )
         })
         console.log(detail)
         return (
             <div className="productAdvantages" key={index + 1}>
-                <div>
-                    {detail}
-                    {types}
-                </div>
+                <tr className="advantageKey">
+                    <td>{detail}</td>
+                </tr>
+                <tr className="advantageValue">
+                    <td>{types}</td>
+                </tr>
             </div>
         )
     })
 
+    const handleProduct = (item) => {
+        planTypes.map((type) => {
+            type.map((element) => {
+                if (element.id === item.id) {
+                    handleActiveProduct(item.id)
+                }
+            })
+        })
+    }
+
     const productData = productNames.map((item) => {
         return (
-            <div className="productName" key={item.id}>
+            <div onClick={() => handleProduct(item)} className="productName" key={item.id}>
                 <div>{item.name}</div>
             </div>
         )
@@ -160,20 +207,33 @@ const Plans = () => {
                 <ul>
                     {advantagesDesc}
                 </ul>
-                <div className="productType__container">
-                    {productData}
-                </div>
-                <div className="product__container">
-                    <div>
+                <table align="right">
+                    <div>{productData}</div>
+                    <tbody>
                         {detailsInfo}
-                    </div>
-                    <div>
-
-                    </div>
+                    </tbody>
+                </table>
+                <div className="advise_section">
+                    <span>
+                        <FontAwesomeIcon icon={faLock} />
+                    </span>
+                    <p>
+                        If you are on an ad-supported plan, you will have a limited number of movies and TV shows unavailable due to licensing restrictions. Some location and device restrictions also apply. <span className="link"> Learn more.</span>
+                    </p>
                 </div>
+                <p className="advise_info">
+                    If you select an ad-supported plan, you will be required to provide your date of birth for ads personalization and other purposes consistent with the Netflix <span className="link">Privacy Statement.</span>
+                </p>
+                <p className="advise_info">
+                    HD (720p), Full HD (1080p), Ultra HD (4K) and HDR availability subject to your internet service and device capabilities. Not all content is available in all resolutions. See our <span className="link"> Terms of Use </span>for more details.
+                </p>
+                <p className="advise_info">
+                    Only people who live with you may use your account. Add 1 extra member with Standard or up to 2 with Premium.  <span className="link"> Learn more.</span> Watch on 4 different devices at the same time with Premium, 2 with Standard and 1 with Basic or Basic with ads.
+                </p>
             </div>
-
-            <button>See all plans</button>
+            <div className="btn_planSection">
+                <Button text='Next' className='nextStep_btn' onClick={handleStep} />
+            </div>
         </>
     )
 };

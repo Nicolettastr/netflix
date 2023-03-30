@@ -12,17 +12,23 @@ import Register from './screens/register.jsx';
 
 function App() {
 
+  const [userIn, setUserIn] = useState(sessionStorage.getItem('userIn') === 'true' ? true : false);
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [newUser, setNewUser] = useState(sessionStorage.getItem('newUser') === 'true' ? true : false);
 
-  const handleRegisterUser = () => {
-    setNewUser(true)
-    sessionStorage.setItem('newUser', 'true');
-  }
-
   const clearSessionStorage = () => {
     sessionStorage.clear();
+  }
+
+  const handleUserIn = () => {
+    setUserIn(true);
+    localStorage.setItem("userIn", JSON.stringify(userIn));
+  }
+
+  const handleNewUser = () => {
+    setNewUser(true);
+    localStorage.setItem("newUser", JSON.stringify(newUser));
   }
 
   console.log("newUser", newUser)
@@ -50,19 +56,19 @@ function App() {
   return (
     <div className='app'>
       <Router>
-        {user && !newUser ? (
+        {user && newUser ? (
           <Nav />
         ) : ""}
         <Routes>
-          {user ? (
+          {user && userIn ? (
             <>
               <Route element={<ProfileScreen />} path='/profile' />
               <Route element={<HomeScreen />} path='/' />
             </>
           ) : (
-            <Route element={<Login />} path='/' />
+            <Route element={<Login handleUserIn={handleUserIn} handleNewUser={handleNewUser} />} path='/' />
           )}
-          <Route element={<Register handleRegisterUser={handleRegisterUser} />} path='/register' />
+          <Route element={<Register handleUserIn={handleUserIn} handleNewUser={handleNewUser} />} path='/register' />
         </Routes>
       </Router>
     </div>

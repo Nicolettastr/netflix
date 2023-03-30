@@ -2,11 +2,15 @@ import React from 'react';
 import Button from '../components/button';
 import logo from '../img/logo.png'
 import '../css/navReg.css'
+import SignUpScreen from '../screens/signUpScreen.jsx'
+import { useNavigate } from 'react-router-dom';
 
 const NavReg = () => {
 
+    const navigate = useNavigate()
+
     const handleSignUp = () => {
-        console.log('click')
+        navigate('/')
     }
 
     return (

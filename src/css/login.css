@@ -135,6 +135,17 @@
     border: 1px solid #a9c52f !important;
 }
 
+.disclaimer {
+    position: absolute;
+    top: 7%;
+    background: white;
+    font-size: 0.74rem;
+    width: 98%;
+    left: 1%;
+    border-radius: 0.1rem;
+    padding: 0.3rem;
+}
+
 @media (min-width: 500px) {
     .loginScreen_input>form {
         display: flex;

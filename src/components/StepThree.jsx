@@ -11,7 +11,7 @@ import PaypalMethod from "./payPal.jsx";
 import { loadStripe } from '@stripe/stripe-js';
 import { selectUser } from '../features/userSlice';
 
-const StepThree = ({ handleStep, products, selectedPlanPriceId }) => {
+const StepThree = ({ handleStep, products, selectedPlanPriceId, handleNewUser, handleUserIn }) => {
 
     const [payments, setPayments] = useState(true)
     const [debitCredit, setDebitCredit] = useState(false);
@@ -75,6 +75,8 @@ const StepThree = ({ handleStep, products, selectedPlanPriceId }) => {
                 }
 
                 if (sessionId) {
+                    handleNewUser()
+                    handleUserIn()
                     const stripe = await loadStripe('pk_test_51MqJeMD7eu1wom6nIQRa6oqEDHANffTvCchpyiyFGA5ojLGD3GbstcxVEuONdSqpZZa2dtz5sTUBzuOUJ25wpmVC00jMK78Zhl');
                     stripe.redirectToCheckout({ sessionId });
                 }

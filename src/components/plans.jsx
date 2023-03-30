@@ -5,10 +5,8 @@ import '../css/plans.css'
 import { db } from "../firebase";
 import Button from "./button.jsx";
 import StepThree from "./StepThree.jsx";
-import { useSelector } from "react-redux";
-import { selectUser } from "../features/userSlice";
 
-const Plans = () => {
+const Plans = ({ handleNewUser, handleUserIn }) => {
 
     const details = ["Monthly price.", "Video quality.", "Resolution.", "Watch on your TV, computer, mobile phone and tablet.", "Downloads."]
     const advantages = ["Watch all you want.", "Recommendations just for you.", "Change or cancel your plan anytime."]
@@ -24,12 +22,10 @@ const Plans = () => {
     const [activeP, setActiveP] = useState(true)
     const [selectedPlan, setSelectedPlan] = useState()
     const [selectedPlanPriceId, setSelectedPlanPriceId] = useState()
-    const [subscription, setSubscription] = useState(null)
     const [paymentStep, setPaymentStep] = useState(() => {
         const storePaymentStep = sessionStorage.getItem('paymentStep');
         return storePaymentStep !== null ? parseInt(storePaymentStep) : 1;
     });
-    const user = useSelector(selectUser)
 
     useEffect(() => {
         sessionStorage.setItem('paymentStep', paymentStep);
@@ -112,18 +108,6 @@ const Plans = () => {
                 })
             });
     }, []);
-
-    useEffect(() => {
-        db.collection('customers').doc(user.uid).collection('subscription').get().then(querySnapshot => {
-            querySnapshot.forEach(async subscription => {
-                setSubscription({
-                    role: subscription.data().role,
-                    current_period_start: subscription.data().current_period_start.seconds,
-                    current_period_end: subscription.data().current_period_end.seconds,
-                })
-            })
-        })
-    }, [user.uid])
 
     const advantagesDesc = advantages.map((item, index) => {
         return (
@@ -231,8 +215,6 @@ const Plans = () => {
         )
     })
 
-    console.log(subscription)
-
     return (
         <>
             {paymentStep === 1 ? (
@@ -272,7 +254,7 @@ const Plans = () => {
                     </div>
                 </>
             ) : paymentStep === 2 ? (
-                <StepThree products={products} selectedPlanPriceId={selectedPlanPriceId} />
+                <StepThree handleUserIn={handleUserIn} handleNewUser={handleNewUser} products={products} selectedPlanPriceId={selectedPlanPriceId} />
             ) : ""}
 
         </>

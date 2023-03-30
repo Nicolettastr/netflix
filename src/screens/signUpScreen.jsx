@@ -6,7 +6,7 @@ import Button from "../components/button";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ handleUserIn, handleNewUser }) => {
 
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
@@ -21,6 +21,8 @@ const SignUpScreen = () => {
         ).then((authUser) => {
             console.log(authUser)
         }).catch((error) => alert(error.message))
+        handleUserIn()
+        handleNewUser()
     };
 
     return (

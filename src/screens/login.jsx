@@ -8,7 +8,7 @@ import Button from '../components/button.jsx'
 import { auth } from '../firebase.js'
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({ handleUserIn, handleNewUser }) => {
 
     const [signIn, setSignIn] = useState(false);
     const [email, setEmail] = useState("");
@@ -56,16 +56,18 @@ const Login = () => {
         getStarted_mg.classList.add('loginScreen_getStarted_mg')
     }
 
+
     return (
         <div className='loginScreen'>
             <div className="loginScreen_background">
                 <img className='loginScreen_logo' src={logo} alt='' />
                 <Button text="Sign In" onClick={handleSignIn} className={'loginScreen_btn'} />
                 <div className="loginScreen_gradient"></div>
+                <div className='disclaimer'><p>This website is solely created for educational and learning purposes. It is not affiliated with Netflix or any other real company. This website does not offer any real payment process. All the content and information provided on this website is for educational purposes only.</p></div>
             </div>
             <div className='loginScreen_container'>
                 {signIn ? (
-                    <SignUpScreen />
+                    <SignUpScreen handleNewUser={handleNewUser} handleUserIn={handleUserIn} />
                 ) :
                     <div className='loginScreen_body'>
                         <h1>Unlimited movies, Tv shows and more.</h1>

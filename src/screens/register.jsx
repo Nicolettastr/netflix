@@ -9,7 +9,7 @@ import StepTwo from "../components/stepTwo.jsx";
 import Login from "./login.jsx"
 import Plans from "../components/plans";
 
-const Register = ({ handleRegisterUser }) => {
+const Register = ({ handleNewUser, handleUserIn }) => {
 
     const emailValue = useRef(null);
     const passwordValue = useRef(null);
@@ -36,7 +36,6 @@ const Register = ({ handleRegisterUser }) => {
                 alert(error.message)
             })
 
-        handleRegisterUser()
         handleStep()
     }
 
@@ -100,7 +99,7 @@ const Register = ({ handleRegisterUser }) => {
                 </div>
             ) : step === 4 ? (
                 <div className="step_section">
-                    <Plans handleStep={handleStep} />
+                    <Plans handleNewUser={handleNewUser} handleUserIn={handleUserIn} handleStep={handleStep} />
                 </div>
             ) : ""
             }

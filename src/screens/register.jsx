@@ -6,7 +6,6 @@ import '../css/register.css'
 import StepOne from "../components/stepOne.jsx";
 import StepOneForm from "../components/stepOneForm";
 import StepTwo from "../components/stepTwo.jsx";
-import StepThree from "../components/StepThree.jsx";
 import Login from "./login.jsx"
 import Plans from "../components/plans";
 
@@ -18,16 +17,10 @@ const Register = ({ handleRegisterUser }) => {
     const email = new URLSearchParams(location.search).get('email');
     const [passwordValidation, setPasswordValidation] = useState("")
     const [invalid, setInvalid] = useState(false)
-
     const [step, setStep] = useState(() => {
         const storedStep = sessionStorage.getItem('step');
         return storedStep !== null ? parseInt(storedStep) : 1;
     });
-
-    useEffect(() => {
-        sessionStorage.setItem('step', step);
-    }, [step]);
-
     const register = (ev) => {
         //when clicked, we want to create an user account
         if (ev) ev.preventDefault();
@@ -75,6 +68,9 @@ const Register = ({ handleRegisterUser }) => {
         }
         window.history.pushState({ step: step + 1 }, "", "");
     }
+    useEffect(() => {
+        sessionStorage.setItem('step', step);
+    }, [step]);
 
     useEffect(() => {
         const handlePopState = () => {
@@ -84,8 +80,6 @@ const Register = ({ handleRegisterUser }) => {
         window.addEventListener("popstate", handlePopState);
         return () => window.removeEventListener("popstate", handlePopState);
     }, []);
-
-    console.log(step)
 
     return (
         <>

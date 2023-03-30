@@ -31,8 +31,6 @@ const Login = () => {
             });
     }
 
-    console.log(emailExists)
-
     const handleSignIn = () => {
         setSignIn(true)
     }

@@ -5,8 +5,10 @@ import '../css/plans.css'
 import { db } from "../firebase";
 import Button from "./button.jsx";
 import StepThree from "./StepThree.jsx";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
-const Plans = ({ handleStep }) => {
+const Plans = () => {
 
     const details = ["Monthly price.", "Video quality.", "Resolution.", "Watch on your TV, computer, mobile phone and tablet.", "Downloads."]
     const advantages = ["Watch all you want.", "Recommendations just for you.", "Change or cancel your plan anytime."]
@@ -21,10 +23,13 @@ const Plans = ({ handleStep }) => {
     const [activeS, setActiveS] = useState(false)
     const [activeP, setActiveP] = useState(true)
     const [selectedPlan, setSelectedPlan] = useState()
+    const [selectedPlanPriceId, setSelectedPlanPriceId] = useState()
+    const [subscription, setSubscription] = useState(null)
     const [paymentStep, setPaymentStep] = useState(() => {
         const storePaymentStep = sessionStorage.getItem('paymentStep');
         return storePaymentStep !== null ? parseInt(storePaymentStep) : 1;
     });
+    const user = useSelector(selectUser)
 
     useEffect(() => {
         sessionStorage.setItem('paymentStep', paymentStep);
@@ -77,25 +82,30 @@ const Plans = ({ handleStep }) => {
                 localStorage.setItem("productName", JSON.stringify(productNames));
 
                 productNames.map((item) => {
+                    console.log("item", item)
                     const id = item.id;
                     if (id === "prod_NbXCjRGeUK6wM3") {
                         setBasicWA([{
                             id: item.id,
+                            price: 5.49,
                             description: item.description
                         }])
                     } else if (id === "prod_NbXD8ij76WI8nh") {
                         setBasic([{
                             id: item.id,
+                            price: 7.99,
                             description: item.description
                         }])
                     } else if (id === "prod_NbXEfymdNwnKLm") {
                         setStandard([{
                             id: item.id,
+                            price: 12.99,
                             description: item.description
                         }])
                     } else if (id === "prod_NbXGmt0rwlsTlm") {
                         setPremium([{
                             id: item.id,
+                            price: 17.99,
                             description: item.description
                         }])
                     }
@@ -103,7 +113,17 @@ const Plans = ({ handleStep }) => {
             });
     }, []);
 
-    console.log("this", products)
+    useEffect(() => {
+        db.collection('customers').doc(user.uid).collection('subscription').get().then(querySnapshot => {
+            querySnapshot.forEach(async subscription => {
+                setSubscription({
+                    role: subscription.data().role,
+                    current_period_start: subscription.data().current_period_start.seconds,
+                    current_period_end: subscription.data().current_period_end.seconds,
+                })
+            })
+        })
+    }, [user.uid])
 
     const advantagesDesc = advantages.map((item, index) => {
         return (
@@ -112,6 +132,8 @@ const Plans = ({ handleStep }) => {
             </li>
         )
     })
+
+    const planTypes = [basicWA, basic, standard, premium]
 
     const handleActiveProduct = (id) => {
         setSelectedPlan(id)
@@ -138,9 +160,6 @@ const Plans = ({ handleStep }) => {
         }
     }
 
-    console.log("selectedPlan", selectedPlan)
-
-    const planTypes = [basicWA, basic, standard, premium]
 
     const detailsInfo = details.map((detail, index) => {
         const types = planTypes.map((element, elementIndex) => {
@@ -148,28 +167,27 @@ const Plans = ({ handleStep }) => {
                 <span className={
                     activeBA ? "activeBA span_container" : activeB ? "activeB span_container" : activeS ? "activeS span_container" : activeP ? "activeP span_container" : "span_container"} key={elementIndex}>
                     {element.map((item) => {
-                        console.log(item.description[3])
                         return (
                             <span>
                                 {
-                                    detail === "Video quality." ? item.description[0] :
-                                        detail === "Resolution." ? item.description[1]
-                                            :
-                                            detail === "Watch on your TV, computer, mobile phone and tablet." ? (
-                                                <FontAwesomeIcon icon={item.description[2] === true ? faCheck : faXmark} />
-                                            )
+                                    detail === "Monthly price." ? item.price :
+                                        detail === "Video quality." ? item.description[0] :
+                                            detail === "Resolution." ? item.description[1]
                                                 :
-                                                detail === "Downloads."
-                                                    ? (
-                                                        <FontAwesomeIcon icon={item.description[3] === true ? faCheck : faXmark} />
-                                                    ) : ""
+                                                detail === "Watch on your TV, computer, mobile phone and tablet." ? (
+                                                    <FontAwesomeIcon icon={item.description[2] === true ? faCheck : faXmark} />
+                                                )
+                                                    :
+                                                    detail === "Downloads."
+                                                        ? (
+                                                            <FontAwesomeIcon icon={item.description[3] === true ? faCheck : faXmark} />
+                                                        ) : ""
                                 }</span>
                         )
                     })}
                 </span>
             )
         })
-        console.log(detail)
         return (
             <div className="productAdvantages" key={index + 1}>
                 <tr className="advantageKey">
@@ -192,6 +210,19 @@ const Plans = ({ handleStep }) => {
         })
     }
 
+    useEffect(() => {
+        Object.entries(products).map(([productId, productData]) => {
+            if (selectedPlan) {
+                if (productId === selectedPlan) {
+                    setSelectedPlanPriceId(
+                        productData.prices.priceId
+                    )
+                }
+            }
+
+        })
+    })
+
     const productData = productNames.map((item) => {
         return (
             <div onClick={() => handleProduct(item)} className="productName" key={item.id}>
@@ -199,6 +230,8 @@ const Plans = ({ handleStep }) => {
             </div>
         )
     })
+
+    console.log(subscription)
 
     return (
         <>
@@ -239,7 +272,7 @@ const Plans = ({ handleStep }) => {
                     </div>
                 </>
             ) : paymentStep === 2 ? (
-                <StepThree products={products} selectedPlan={selectedPlan} />
+                <StepThree products={products} selectedPlanPriceId={selectedPlanPriceId} />
             ) : ""}
 
         </>

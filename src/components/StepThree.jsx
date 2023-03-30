@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { db } from "../firebase";
+import { useSelector } from "react-redux";
 import '../css/steps.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faGift } from "@fortawesome/free-solid-svg-icons";
@@ -7,20 +9,52 @@ import PaymentOpt from "./paymentOpt.jsx";
 import DebitCredit from "./debitCredit.jsx";
 import GiftCard from "./giftCard.jsx";
 import PaypalMethod from "./payPal.jsx";
+import { loadStripe } from '@stripe/stripe-js';
+import { selectUser } from '../features/userSlice';
 
-const StepThree = ({ handleStep, step }) => {
+const StepThree = ({ handleStep, products }) => {
 
     const [payments, setPayments] = useState(true)
     const [debitCredit, setDebitCredit] = useState(false);
     const [paypal, setPaypal] = useState(false);
     const [giftCard, setGiftCard] = useState(false);
+    const user = useSelector(selectUser)
+
+    const loadCheckout = async (pricesId, productData, id) => {
+
+        console.log("data", productData)
+        console.log("priceid", pricesId)
+        console.log("elementID", id)
+        const docRef = db.collection('customers').doc(user.uid).collection('checkout_sessions').add({
+            price: pricesId,
+            success_url: window.location.origin,
+            cancel_url: window.location.origin,
+        }).then((docRef) => {
+            docRef.onSnapshot(async (snap) => {
+                const { error, sessionId } = snap.data();
+
+                if (error) {
+                    alert(`An error occured: ${error.message}`)
+                }
+
+                if (sessionId) {
+                    const stripe = await loadStripe('pk_test_51MqJeMD7eu1wom6nIQRa6oqEDHANffTvCchpyiyFGA5ojLGD3GbstcxVEuONdSqpZZa2dtz5sTUBzuOUJ25wpmVC00jMK78Zhl');
+                    stripe.redirectToCheckout({ sessionId });
+                }
+            })
+        })
+    }
+
+    console.log(user)
 
     const handlePaymentOpt = (id) => {
-        handleStep()
         console.log(id)
         if (id === 1) {
-            setDebitCredit(true)
-            setPayments(false)
+            {
+                Object.entries(products).map(([productId, productData]) => {
+                    loadCheckout(productData.prices.priceId, productData, id)
+                })
+            }
         } else if (id === 2) {
             setPaypal(true)
             setPayments(false)
@@ -88,11 +122,11 @@ const StepThree = ({ handleStep, step }) => {
     return (
         <> {payments ? (
             <PaymentOpt handleStep={handleStep} paymentOptions={paymentOptions} />
-        ) : debitCredit && step === 6 ? (
+        ) : debitCredit ? (
             <DebitCredit />
-        ) : paypal && step === 6 ? (
+        ) : paypal ? (
             <PaypalMethod />
-        ) : giftCard && step === 6 ? (
+        ) : giftCard ? (
             <GiftCard />
         ) : ""}
 

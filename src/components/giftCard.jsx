@@ -7,6 +7,8 @@ const GiftCard = () => {
         console.log("click")
     }
 
+    const giftCode = "LQSZA532059";
+
     return (
         <>
             <section className="payment_container">

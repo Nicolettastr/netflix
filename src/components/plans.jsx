@@ -4,6 +4,7 @@ import { faCheck, faXmark, faLock } from "@fortawesome/free-solid-svg-icons";
 import '../css/plans.css'
 import { db } from "../firebase";
 import Button from "./button.jsx";
+import StepThree from "./StepThree.jsx";
 
 const Plans = ({ handleStep }) => {
 
@@ -19,37 +20,33 @@ const Plans = ({ handleStep }) => {
     const [activeB, setActiveB] = useState(false)
     const [activeS, setActiveS] = useState(false)
     const [activeP, setActiveP] = useState(true)
+    const [selectedPlan, setSelectedPlan] = useState()
+    const [paymentStep, setPaymentStep] = useState(() => {
+        const storePaymentStep = sessionStorage.getItem('paymentStep');
+        return storePaymentStep !== null ? parseInt(storePaymentStep) : 1;
+    });
 
-    //Use an useEffect to fetch the plans from the data base, this is because the stripe extension pulls the stripe data into our firebase data and connects them.
+    useEffect(() => {
+        sessionStorage.setItem('paymentStep', paymentStep);
+    }, [paymentStep]);
 
-    // useEffect(() => {
-    //     //we do this because inside of firebase we have a collection which its name is products
-    //     db.collection('products')
-    //         //this is to filter them, sometimes we can have multiple products, some active and some inactive but still in the database
-    //         .where('active', '==', true)
-    //         //this will give us a querySnapshot because we query by active, the previous line
-    //         .get().then(querySnapshot => {
-    //             // create an empty products object
-    //             const products = {};
-    //             //this will return a bunch of doc
-    //             querySnapshot.forEach(async productDoc => {
-    //                 //every time it goes through a productDoc it brings for each id, the product data which is the product details
-    //                 products[productDoc.id] = productDoc.data()
-    //                 //each price has its own details and its own price collection, to get them we do the next steps:
-    //                 //create priceSnap variable, use the await because its async and them we go to the productDoc reference get into the collecion and this time we go to price
-    //                 const priceSnap = await productDoc.ref.collection('prices').get();
-    //                 //this is because theres a posibility to have more than one price, so we create an object with the price id and price data, to get the info into a object
-    //                 priceSnap.docs.forEach(price => {
-    //                     products[productDoc.id].prices = {
-    //                         priceId: price.id,
-    //                         priceData: price.data()
-    //                     }
-    //                 })
-    //             });
-    //             setProducts(products);
-    //         });
-    // }, []);
+    const handPaymentStep = (num = 1) => {
+        setPaymentStep(paymentStep + 1);
+        localStorage.setItem("paymentStep", paymentStep + 1);
+        // if (paymentStep < 1 || paymentStep > 9) {
+        //     return <Login />
+        // }
+        window.history.pushState({ paymentStep: paymentStep + 1 }, "", "");
+    }
 
+    useEffect(() => {
+        const handlePopState = () => {
+            setPaymentStep((prevStep) => prevStep - 1);
+        };
+
+        window.addEventListener("popstate", handlePopState);
+        return () => window.removeEventListener("popstate", handlePopState);
+    }, []);
 
     useEffect(() => {
         // fetch products from firebase
@@ -79,7 +76,6 @@ const Plans = ({ handleStep }) => {
                 setProductNames(productData);
                 localStorage.setItem("productName", JSON.stringify(productNames));
 
-
                 productNames.map((item) => {
                     const id = item.id;
                     if (id === "prod_NbXCjRGeUK6wM3") {
@@ -107,6 +103,8 @@ const Plans = ({ handleStep }) => {
             });
     }, []);
 
+    console.log("this", products)
+
     const advantagesDesc = advantages.map((item, index) => {
         return (
             <li key={index + 4}>
@@ -116,6 +114,7 @@ const Plans = ({ handleStep }) => {
     })
 
     const handleActiveProduct = (id) => {
+        setSelectedPlan(id)
         if (id === "prod_NbXCjRGeUK6wM3") {
             setActiveBA(true)
             setActiveB(false)
@@ -138,6 +137,8 @@ const Plans = ({ handleStep }) => {
             setActiveS(false)
         }
     }
+
+    console.log("selectedPlan", selectedPlan)
 
     const planTypes = [basicWA, basic, standard, premium]
 
@@ -201,39 +202,46 @@ const Plans = ({ handleStep }) => {
 
     return (
         <>
-            <div className="third_section_info">
-                <p>STEP <strong>1</strong> of <strong>3</strong></p>
-                <h2>Choose the plan that's right for you.</h2>
-                <ul>
-                    {advantagesDesc}
-                </ul>
-                <table align="right">
-                    <div>{productData}</div>
-                    <tbody>
-                        {detailsInfo}
-                    </tbody>
-                </table>
-                <div className="advise_section">
-                    <span>
-                        <FontAwesomeIcon icon={faLock} />
-                    </span>
-                    <p>
-                        If you are on an ad-supported plan, you will have a limited number of movies and TV shows unavailable due to licensing restrictions. Some location and device restrictions also apply. <span className="link"> Learn more.</span>
-                    </p>
-                </div>
-                <p className="advise_info">
-                    If you select an ad-supported plan, you will be required to provide your date of birth for ads personalization and other purposes consistent with the Netflix <span className="link">Privacy Statement.</span>
-                </p>
-                <p className="advise_info">
-                    HD (720p), Full HD (1080p), Ultra HD (4K) and HDR availability subject to your internet service and device capabilities. Not all content is available in all resolutions. See our <span className="link"> Terms of Use </span>for more details.
-                </p>
-                <p className="advise_info">
-                    Only people who live with you may use your account. Add 1 extra member with Standard or up to 2 with Premium.  <span className="link"> Learn more.</span> Watch on 4 different devices at the same time with Premium, 2 with Standard and 1 with Basic or Basic with ads.
-                </p>
-            </div>
-            <div className="btn_planSection">
-                <Button text='Next' className='nextStep_btn' onClick={handleStep} />
-            </div>
+            {paymentStep === 1 ? (
+                <>
+                    <div className="third_section_info">
+                        <p>STEP <strong>1</strong> of <strong>3</strong></p>
+                        <h2>Choose the plan that's right for you.</h2>
+                        <ul>
+                            {advantagesDesc}
+                        </ul>
+                        <table align="right">
+                            <div>{productData}</div>
+                            <tbody>
+                                {detailsInfo}
+                            </tbody>
+                        </table>
+                        <div className="advise_section">
+                            <span>
+                                <FontAwesomeIcon icon={faLock} />
+                            </span>
+                            <p>
+                                If you are on an ad-supported plan, you will have a limited number of movies and TV shows unavailable due to licensing restrictions. Some location and device restrictions also apply. <span className="link"> Learn more.</span>
+                            </p>
+                        </div>
+                        <p className="advise_info">
+                            If you select an ad-supported plan, you will be required to provide your date of birth for ads personalization and other purposes consistent with the Netflix <span className="link">Privacy Statement.</span>
+                        </p>
+                        <p className="advise_info">
+                            HD (720p), Full HD (1080p), Ultra HD (4K) and HDR availability subject to your internet service and device capabilities. Not all content is available in all resolutions. See our <span className="link"> Terms of Use </span>for more details.
+                        </p>
+                        <p className="advise_info">
+                            Only people who live with you may use your account. Add 1 extra member with Standard or up to 2 with Premium.  <span className="link"> Learn more.</span> Watch on 4 different devices at the same time with Premium, 2 with Standard and 1 with Basic or Basic with ads.
+                        </p>
+                    </div>
+                    <div className="btn_planSection">
+                        <Button text='Next' className='nextStep_btn' onClick={handPaymentStep} />
+                    </div>
+                </>
+            ) : paymentStep === 2 ? (
+                <StepThree products={products} selectedPlan={selectedPlan} />
+            ) : ""}
+
         </>
     )
 };

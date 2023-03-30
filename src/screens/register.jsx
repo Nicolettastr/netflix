@@ -108,15 +108,7 @@ const Register = ({ handleRegisterUser }) => {
                 <div className="step_section">
                     <Plans handleStep={handleStep} />
                 </div>
-            ) : step === 5 ? (
-                <div className="step_section">
-                    <StepThree handleStep={handleStep} step={step} />
-                </div>
-            ) :
-                // its repeat so it can be send to the payment type page, this is because I used 3 state variables, debit, paypal and giftCard initialized as false, that when clicked turns true, aditionally, I state that if the state variable is true and step === 6, show me each page, did it this way to be able to use the popstate, you can go backwards with the browser
-                <div className="step_section">
-                    <StepThree handleStep={handleStep} step={step} />
-                </div>
+            ) : ""
             }
         </>
     )

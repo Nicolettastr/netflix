@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import '../css/steps.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faCcAmex, faPaypal, faCcVisa, faCcMastercard } from '@fortawesome/free-brands-svg-icons';
-import PaymentOpt from "./paymentOpt";
+import PaymentOpt from "./paymentOpt.jsx";
+import DebitCredit from "./debitCredit.jsx";
+import GiftCard from "./giftCard.jsx";
+import PaypalMethod from "./payPal.jsx";
 
-const StepThree = ({ handleStep }) => {
+const StepThree = ({ handleStep, step }) => {
 
     const [payments, setPayments] = useState(true)
     const [debitCredit, setDebitCredit] = useState(false);
@@ -13,6 +16,8 @@ const StepThree = ({ handleStep }) => {
     const [giftCard, setGiftCard] = useState(false);
 
     const handlePaymentOpt = (id) => {
+        handleStep()
+        console.log(id)
         if (id === 1) {
             setDebitCredit(true)
             setPayments(false)
@@ -65,15 +70,30 @@ const StepThree = ({ handleStep }) => {
         )
     });
 
+    useEffect(() => {
+        const handleBackButton = () => {
+            if (debitCredit || paypal || giftCard) {
+                setDebitCredit(false);
+                setPaypal(false);
+                setGiftCard(false);
+                setPayments(true);
+            }
+        };
+        window.addEventListener("popstate", handleBackButton);
+        return () => {
+            window.removeEventListener("popstate", handleBackButton);
+        };
+    }, [debitCredit, paypal, giftCard]);
+
     return (
         <> {payments ? (
             <PaymentOpt handleStep={handleStep} paymentOptions={paymentOptions} />
-        ) : debitCredit ? (
-            ""
-        ) : paypal ? (
-            ""
-        ) : giftCard ? (
-            ""
+        ) : debitCredit && step === 6 ? (
+            <DebitCredit />
+        ) : paypal && step === 6 ? (
+            <PaypalMethod />
+        ) : giftCard && step === 6 ? (
+            <GiftCard />
         ) : ""}
 
         </>
